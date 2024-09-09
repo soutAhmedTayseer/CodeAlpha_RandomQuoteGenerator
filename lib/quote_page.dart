@@ -66,18 +66,6 @@ class _QuotePageState extends State<QuotePage> {
     final Color textColor = Colors.white; // White text color
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Random Quote Generator',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: textColor, // White text color
-          ),
-        ),
-        backgroundColor: appBarColor, // Set the AppBar color to black
-      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
