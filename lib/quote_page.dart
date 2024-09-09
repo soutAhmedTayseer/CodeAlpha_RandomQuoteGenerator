@@ -37,7 +37,6 @@ class _QuotePageState extends State<QuotePage> {
   Widget build(BuildContext context) {
     final Color appBarColor = Colors.black; // Black color for the AppBar
     final Color cardColor = Colors.white70; // White color for the Card
-    final Color backgroundColor = Colors.cyan; // Blue color for the app background
     final Color textColor = Colors.white; // White text color
 
     return Scaffold(
@@ -53,48 +52,63 @@ class _QuotePageState extends State<QuotePage> {
         ),
         backgroundColor: appBarColor, // Set the AppBar color to black
       ),
-      backgroundColor: backgroundColor, // Set the background color of the app to blue
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Center(
-                child: _quote != null
-                    ? AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500), // Transition duration
-                  child: Container(
-                    key: ValueKey<Quote>(_quote!), // Unique key for each quote
-                    constraints: BoxConstraints(
-                      maxWidth: 400, // Max width of the card
-                    ),
-                    child: Card(
-                      color: cardColor, // Set the Card background color to white
-                      elevation: 5, // Shadow for the card
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // Rounded corners
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: QuoteDisplay(quote: _quote),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background image
+          Image.asset(
+            'assets/images/s.jpg', // Replace with your background image path
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                // Expanded to fill the remaining space
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: _quote != null
+                          ? AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        child: Column(
+                          key: ValueKey<Quote>(_quote!), // Unique key for each quote
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth: 400, // Max width of the card
+                              ),
+                              child: Card(
+                                color: cardColor, // Set the Card background color to white
+                                elevation: 5, // Shadow for the card
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10), // Rounded corners
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: QuoteDisplay(quote: _quote),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                          : Text(
+                        'Press "New Quote" to get a quote!',
+                        style: TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                )
-                    : Text(
-                  'Press "New Quote" to get a quote!',
-                  style: TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+                SizedBox(height: 20), // Space between card and buttons
+                ButtonsRow(
+                  onNewQuote: _getRandomQuote,
+                  onShareQuote: _shareQuote,
+                ),
+              ],
             ),
-            SizedBox(height: 20), // Space between card and buttons
-            ButtonsRow(
-              onNewQuote: _getRandomQuote,
-              onShareQuote: _shareQuote,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
