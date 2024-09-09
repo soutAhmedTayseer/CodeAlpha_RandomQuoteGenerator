@@ -1,5 +1,5 @@
+import 'dart:math';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/quote.dart';
 import 'package:flutter_projects/quote_display.dart';
@@ -14,13 +14,31 @@ class QuotePage extends StatefulWidget {
 
 class _QuotePageState extends State<QuotePage> {
   Quote? _quote;
+  String? _backgroundImage; // To store the selected random background image
+  bool _isLiked = false; // To track if the quote is liked
 
-  // Fetch a random quote
+  // List of background images
+  final List<String> _backgroundImages = [
+    'assets/images/t.webp',
+    'assets/images/s.jpg',
+    'assets/images/v.jpg',
+    'assets/images/2.jpg',
+  ];
+
+  // Fetch a random quote and a random background image
   Future<void> _getRandomQuote() async {
     final newQuote = await ApiService.fetchRandomQuote();
     setState(() {
       _quote = newQuote;
+      _backgroundImage = _getRandomImage(); // Select a random image
+      _isLiked = false; // Reset liked status when fetching a new quote
     });
+  }
+
+  // Get a random image from the list
+  String _getRandomImage() {
+    final random = Random();
+    return _backgroundImages[random.nextInt(_backgroundImages.length)];
   }
 
   // Share the quote
@@ -33,6 +51,13 @@ class _QuotePageState extends State<QuotePage> {
         SnackBar(content: Text('No quote available to share!')),
       );
     }
+  }
+
+  // Toggle the liked status
+  void _toggleLike() {
+    setState(() {
+      _isLiked = !_isLiked;
+    });
   }
 
   @override
@@ -60,7 +85,7 @@ class _QuotePageState extends State<QuotePage> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/s.jpg'), // Replace with your background image
+                image: AssetImage(_backgroundImage ?? 'assets/images/s.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.1), // Darken the background for better contrast
@@ -99,8 +124,27 @@ class _QuotePageState extends State<QuotePage> {
                                   ),
                                 ],
                               ),
-                              child: QuoteDisplay(
-                                quote: _quote,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  QuoteDisplay(
+                                    quote: _quote,
+                                  ),
+                                  SizedBox(height: 10), // Space between quote and like button
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          _isLiked ? Icons.favorite : Icons.favorite_border,
+                                          color: _isLiked ? Colors.red : Colors.black,
+                                          size: 30,
+                                        ),
+                                        onPressed: _toggleLike,
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ],
