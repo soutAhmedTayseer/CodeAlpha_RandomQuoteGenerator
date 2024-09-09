@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'quote_page.dart';
-
+import 'splash_screen.dart';
 void main() {
   runApp(const RandomQuoteApp());
 }
@@ -15,7 +14,7 @@ class RandomQuoteApp extends StatelessWidget {
       title: 'Random Quote Generator',
       theme: ThemeData(
       ),
-      home: QuotePage(),
+      home: const SplashScreen(),
     );
   }
 }
