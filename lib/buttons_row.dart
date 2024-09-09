@@ -12,8 +12,8 @@ class ButtonsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color buttonColor = Colors.black; // Background color for buttons
-    final Color textColor = Colors.white; // Text and icon color for buttons
+    final Color buttonColor = Colors.white; // Background color for buttons
+    final Color textColor = Colors.black; // Text and icon color for buttons
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -31,7 +31,7 @@ class ButtonsRow extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.format_quote, color: textColor), // Icon color
+              Icon(Icons.refresh, color: textColor), // Icon color
               SizedBox(width: 8),
               Text('New Quote', style: TextStyle(color: textColor)), // Text color
             ],
