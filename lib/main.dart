@@ -14,7 +14,6 @@ class RandomQuoteApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Random Quote Generator',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
       ),
       home: QuotePage(),
     );
