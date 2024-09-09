@@ -7,13 +7,13 @@ class ButtonsRow extends StatelessWidget {
   const ButtonsRow({
     required this.onNewQuote,
     required this.onShareQuote,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final Color buttonColor = Colors.white; // Background color for buttons
-    final Color textColor = Colors.black; // Text and icon color for buttons
+    const Color buttonColor = Colors.white; // Background color for buttons
+    const Color textColor = Colors.black; // Text and icon color for buttons
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -22,18 +22,18 @@ class ButtonsRow extends StatelessWidget {
           onPressed: onNewQuote,
           style: ElevatedButton.styleFrom(
             foregroundColor: textColor, backgroundColor: buttonColor, // Set text and icon color
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            textStyle: TextStyle(fontSize: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            textStyle: const TextStyle(fontSize: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8), // Rounded corners
             ),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.refresh, color: textColor), // Icon color
+              Icon(Icons.format_quote, color: textColor), // Icon color
               SizedBox(width: 8),
-              Text('New Quote', style: TextStyle(color: textColor)), // Text color
+              Text('Generate   ', style: TextStyle(color: textColor)), // Text color
             ],
           ),
         ),
@@ -41,18 +41,18 @@ class ButtonsRow extends StatelessWidget {
           onPressed: onShareQuote,
           style: ElevatedButton.styleFrom(
             foregroundColor: textColor, backgroundColor: buttonColor, // Set text and icon color
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            textStyle: TextStyle(fontSize: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            textStyle: const TextStyle(fontSize: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8), // Rounded corners
             ),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.share, color: textColor), // Icon color
               SizedBox(width: 8),
-              Text('Share', style: TextStyle(color: textColor)), // Text color
+              Text('  Share  ', style: TextStyle(color: textColor)), // Text color
             ],
           ),
         ),
