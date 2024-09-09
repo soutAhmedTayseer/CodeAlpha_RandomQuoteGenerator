@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/quote.dart';
 import 'package:flutter_projects/quote_display.dart';
@@ -36,7 +38,6 @@ class _QuotePageState extends State<QuotePage> {
   @override
   Widget build(BuildContext context) {
     final Color appBarColor = Colors.black; // Black color for the AppBar
-    final Color cardColor = Colors.white70; // White color for the Card
     final Color textColor = Colors.white; // White text color
 
     return Scaffold(
@@ -55,10 +56,18 @@ class _QuotePageState extends State<QuotePage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background image
-          Image.asset(
-            'assets/images/s.jpg', // Replace with your background image path
-            fit: BoxFit.cover,
+          // Background image with blur effect
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/s.jpg'), // Replace with your background image
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.1), // Darken the background for better contrast
+                  BlendMode.darken,
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -76,18 +85,22 @@ class _QuotePageState extends State<QuotePage> {
                           children: [
                             Container(
                               constraints: BoxConstraints(
-                                maxWidth: 400, // Max width of the card
+                                maxWidth: 400, // Max width of the quote display
                               ),
-                              child: Card(
-                                color: cardColor, // Set the Card background color to white
-                                elevation: 5, // Shadow for the card
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10), // Rounded corners
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: QuoteDisplay(quote: _quote),
-                                ),
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.8), // Slightly transparent background
+                                borderRadius: BorderRadius.circular(15), // Rounded corners
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 5), // Slight shadow for depth
+                                  ),
+                                ],
+                              ),
+                              child: QuoteDisplay(
+                                quote: _quote,
                               ),
                             ),
                           ],
@@ -95,12 +108,16 @@ class _QuotePageState extends State<QuotePage> {
                       )
                           : Text(
                         'Press "New Quote" to get a quote!',
-                        style: TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 23,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Space between card and buttons
+                SizedBox(height: 20), // Space between quote and buttons
                 ButtonsRow(
                   onNewQuote: _getRandomQuote,
                   onShareQuote: _shareQuote,
