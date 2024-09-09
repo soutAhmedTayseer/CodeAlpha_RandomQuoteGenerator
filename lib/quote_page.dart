@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/quote.dart';
 import 'package:flutter_projects/quote_display.dart';
@@ -8,6 +8,8 @@ import 'api_service.dart';
 import 'buttons_row.dart';
 
 class QuotePage extends StatefulWidget {
+  const QuotePage({super.key});
+
   @override
   _QuotePageState createState() => _QuotePageState();
 }
@@ -45,10 +47,13 @@ class _QuotePageState extends State<QuotePage> {
   void _shareQuote() {
     if (_quote != null) {
       final String quoteText = '"${_quote!.content}"\n- ${_quote!.author}';
+      if (kDebugMode) {
+        print('Sharing quote: $quoteText');
+      } // Debugging line
       Share.share(quoteText, subject: 'Inspiring Quote');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No quote available to share!')),
+        const SnackBar(content: Text('No quote available to share!')),
       );
     }
   }
@@ -62,9 +67,6 @@ class _QuotePageState extends State<QuotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color appBarColor = Colors.black; // Black color for the AppBar
-    final Color textColor = Colors.white; // White text color
-
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -97,7 +99,7 @@ class _QuotePageState extends State<QuotePage> {
                           key: ValueKey<Quote>(_quote!), // Unique key for each quote
                           children: [
                             Container(
-                              constraints: BoxConstraints(
+                              constraints: const BoxConstraints(
                                 maxWidth: 400, // Max width of the quote display
                               ),
                               padding: const EdgeInsets.all(16.0),
@@ -108,7 +110,7 @@ class _QuotePageState extends State<QuotePage> {
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.2),
                                     blurRadius: 10,
-                                    offset: Offset(0, 5), // Slight shadow for depth
+                                    offset: const Offset(0, 5), // Slight shadow for depth
                                   ),
                                 ],
                               ),
@@ -118,7 +120,7 @@ class _QuotePageState extends State<QuotePage> {
                                   QuoteDisplay(
                                     quote: _quote,
                                   ),
-                                  SizedBox(height: 10), // Space between quote and like button
+                                  const SizedBox(height: 10), // Space between quote and like button
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
@@ -138,10 +140,10 @@ class _QuotePageState extends State<QuotePage> {
                           ],
                         ),
                       )
-                          : Text(
-                        'Press "New Quote" to get a quote!',
+                          : const Text(
+                        'Press "Generate" to get a quote!',
                         style: TextStyle(
-                          fontSize: 23,
+                          fontSize: 17,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -149,7 +151,7 @@ class _QuotePageState extends State<QuotePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Space between quote and buttons
+                const SizedBox(height: 20), // Space between quote and buttons
                 ButtonsRow(
                   onNewQuote: _getRandomQuote,
                   onShareQuote: _shareQuote,
