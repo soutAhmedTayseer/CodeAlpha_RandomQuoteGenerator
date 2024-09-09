@@ -4,11 +4,11 @@ import 'package:flutter_projects/quote.dart';
 class QuoteDisplay extends StatelessWidget {
   final Quote? quote;
 
-  const QuoteDisplay({this.quote});
+  const QuoteDisplay({super.key, this.quote});
 
   @override
   Widget build(BuildContext context) {
-    final Color cardBackgroundColor = Colors.white12;
+    const Color cardBackgroundColor = Colors.white12;
 
     return Container(
       padding: const EdgeInsets.all(16.0), // Padding around the text
@@ -60,11 +60,11 @@ class QuoteDisplay extends StatelessWidget {
               Text(
                 quote!.content,
                 style: const TextStyle(
-                  fontSize: 30,
+                  fontSize: 18,
                   fontStyle: FontStyle.italic,
                   color: Colors.black, // Adjust text color if needed
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
               const SizedBox(height: 40), // Space between quote and author
               Align(
@@ -72,7 +72,7 @@ class QuoteDisplay extends StatelessWidget {
                 child: Text(
                   '- ${quote!.author}',
                   style: const TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.black, // Adjust text color if needed
                   ),
